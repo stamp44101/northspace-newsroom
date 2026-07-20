@@ -161,7 +161,7 @@ function render(){
       <h2 class="headline">${esc(it.headline)}</h2>
       <p class="summary">${esc(it.summary)}</p>
       <div class="provinces">${provs}</div>
-      <div class="foot"><span class="date">${esc(it.date)}</span><div class="srcs">${srcs}</div></div>
+      <div class="foot"><span class="date">${esc(it.date)}${it.time?' · '+esc(it.time)+' น.':''}</span><div class="srcs">${srcs}</div></div>
     </article>`;
   }).join('');
 }
