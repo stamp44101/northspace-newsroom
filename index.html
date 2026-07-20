@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NorthSpace NewsRoom — ข่าวเชียงใหม่ · ภาคเหนือ</title>
+<meta name="description" content="ฟีดข่าวเชียงใหม่และภาคเหนือ คัดกรองและเรียบเรียงโดย AI">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f9; --surface:#ffffff; --ink:#141a2e; --muted:#5b6479; --faint:#8b93a7;
+    --line:#e7eaf1; --accent:#2b46e0; --accent-soft:#eef1fe;
+    --breaking:#e5484d; --breaking-soft:#fdecec;
+    --event:#0e9f6e; --event-soft:#e6f6ef;
+    --shadow:0 1px 2px rgba(20,26,46,.04), 0 8px 24px rgba(20,26,46,.06);
+    --shadow-hover:0 2px 4px rgba(20,26,46,.05), 0 14px 34px rgba(20,26,46,.10);
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Noto Sans Thai',system-ui,sans-serif;
+    background:
+      radial-gradient(1100px 420px at 78% -8%, #eaf0ff 0%, rgba(234,240,255,0) 60%),
+      var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  .wrap.narrow{max-width:1160px}
+
+  /* header */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(245,246,249,.82);backdrop-filter:saturate(160%) blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .hd{display:flex;align-items:center;gap:12px;padding:16px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Kanit',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em}
+  .star{color:var(--accent);font-size:22px;line-height:1;transform:translateY(1px)}
+  .brand small{display:block;font-family:'Noto Sans Thai';font-weight:500;font-size:11px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+  .updated{margin-left:auto;text-align:right;font-size:12px;color:var(--muted)}
+  .updated b{display:block;font-family:'Kanit';font-weight:600;color:var(--ink);font-size:13px}
+  .live{display:inline-flex;align-items:center;gap:5px;color:#12a150;font-weight:600}
+  .live i{width:7px;height:7px;border-radius:50%;background:#18c064;box-shadow:0 0 0 0 rgba(24,192,100,.5);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(24,192,100,.5)}70%{box-shadow:0 0 0 7px rgba(24,192,100,0)}100%{box-shadow:0 0 0 0 rgba(24,192,100,0)}}
+
+  /* hero line */
+  .lede{padding:26px 0 6px}
+  .lede h1{font-family:'Kanit';font-weight:700;font-size:clamp(24px,5vw,34px);letter-spacing:-.02em;margin:0 0 6px}
+  .lede p{margin:0;color:var(--muted);font-size:15px}
+
+  /* filters */
+  .filters{display:flex;gap:8px;overflow-x:auto;padding:16px 0 6px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{
+    flex:0 0 auto;border:1px solid var(--line);background:var(--surface);
+    color:var(--muted);font-family:'Kanit';font-weight:500;font-size:13.5px;
+    padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap;
+  }
+  .chip:hover{border-color:#cdd4e4;color:var(--ink)}
+  .chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  /* feed — compact overview grid */
+  main{padding:10px 0 64px}
+  #feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;align-items:stretch}
+  .card{
+    position:relative;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;padding:15px 17px 13px;margin:0;box-shadow:var(--shadow);
+    transition:transform .16s ease, box-shadow .16s ease;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:.9}
+  .card.breaking::before{background:var(--breaking)}
+  .card.event::before{background:var(--event)}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+
+  .row1{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-family:'Kanit';font-weight:600;font-size:11px;letter-spacing:.02em;padding:3px 9px;border-radius:999px}
+  .badge.breaking{background:var(--breaking-soft);color:var(--breaking)}
+  .badge.cat{background:var(--accent-soft);color:var(--accent)}
+  .badge.event{background:var(--event-soft);color:var(--event)}
+  .badge.breaking::before{content:"● ";font-size:9px;vertical-align:1px}
+
+  .headline{font-family:'Kanit';font-weight:600;font-size:16px;line-height:1.38;letter-spacing:-.01em;margin:1px 0 6px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .summary{color:#414a61;font-size:13px;line-height:1.55;margin:0 0 10px;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+  .provinces{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 10px}
+  .prov{font-size:11px;color:var(--muted);background:#f1f3f8;border:1px solid var(--line);padding:2px 8px;border-radius:6px}
+
+  .foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+  .date{font-size:12px;color:var(--faint);font-family:'Kanit';font-weight:500}
+  .srcs{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .src{font-family:'Kanit';font-weight:500;font-size:11.5px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:1px solid var(--accent-soft);background:var(--accent-soft);padding:3px 8px;border-radius:7px;transition:.15s}
+  .src:hover{background:#e2e8ff;border-color:#d3dbff}
+  .src svg{width:12px;height:12px}
+
+  footer.pg{padding:26px 0 48px;text-align:center;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);margin-top:20px}
+  footer.pg b{font-family:'Kanit';color:var(--muted)}
+  .empty{text-align:center;color:var(--muted);padding:48px 0;font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <div class="brand"><span class="star">✦</span><span>NorthSpace<small>NewsRoom</small></span></div>
+    <div class="updated"><span class="live"><i></i>LIVE</span><b id="mUpdated">—</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="lede">
+    <h1 id="mTitle">NorthSpace NewsRoom</h1>
+    <p id="mTagline">—</p>
+  </section>
+  <nav class="filters" id="filters"></nav>
+</div>
+
+<main class="wrap">
+  <div id="feed"></div>
+  <div class="empty" id="empty" style="display:none">ไม่มีข่าวในหมวดนี้</div>
+</main>
+
+<footer class="pg wrap">
+  <b>NorthSpace NewsRoom</b> · ข่าวคัดกรอง+เรียบเรียงโดย AI · อ้างอิงแหล่งข่าวต้นทางเสมอ
+</footer>
+
+<script>
+const LINK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg>';
+let DATA = null, activeFilter = "ทั้งหมด";
+
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function render(){
+  const feed = document.getElementById('feed');
+  const items = DATA.items.filter(it=>{
+    if(activeFilter==="ทั้งหมด") return true;
+    if(activeFilter==="🔴 ด่วน") return it.urgency==="breaking";
+    return it.category===activeFilter;
+  });
+  document.getElementById('empty').style.display = items.length? 'none':'block';
+  feed.innerHTML = items.map(it=>{
+    const brk = it.urgency==="breaking";
+    const ev = it.urgency==="event";
+    const pv = it.provinces||[];
+    const provs = pv.slice(0,4).map(p=>`<span class="prov">${esc(p)}</span>`).join('') + (pv.length>4?`<span class="prov">+${pv.length-4}</span>`:'');
+    const srcs = (it.sources||[]).map(s=>`<a class="src" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)} ${LINK_ICON}</a>`).join('');
+    return `<article class="card ${brk?'breaking':''} ${ev?'event':''}">
+      <div class="row1">
+        ${brk?'<span class="badge breaking">ด่วน</span>':''}
+        ${ev?'<span class="badge event">อีเวนต์</span>':''}
+        <span class="badge cat">${esc(it.category)}</span>
+      </div>
+      <h2 class="headline">${esc(it.headline)}</h2>
+      <p class="summary">${esc(it.summary)}</p>
+      <div class="provinces">${provs}</div>
+      <div class="foot"><span class="date">${esc(it.date)}</span><div class="srcs">${srcs}</div></div>
+    </article>`;
+  }).join('');
+}
+
+function buildFilters(){
+  const cats = [...new Set(DATA.items.map(i=>i.category))];
+  const chips = ["ทั้งหมด","🔴 ด่วน",...cats];
+  const nav = document.getElementById('filters');
+  nav.innerHTML = chips.map(c=>`<button class="chip ${c===activeFilter?'active':''}" data-f="${esc(c)}">${esc(c)}</button>`).join('');
+  nav.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{
+    activeFilter=b.dataset.f;
+    nav.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.f===activeFilter));
+    render();
+  });
+}
+
+fetch('data.json?v='+Date.now()).then(r=>r.json()).then(d=>{
+  DATA=d;
+  document.getElementById('mTitle').textContent=d.meta.title;
+  document.getElementById('mTagline').textContent=d.meta.tagline;
+  document.getElementById('mUpdated').textContent='อัปเดต '+d.meta.updated;
+  document.title=d.meta.title+' — ข่าวเชียงใหม่ · ภาคเหนือ';
+  buildFilters(); render();
+}).catch(()=>{document.getElementById('feed').innerHTML='<div class="empty">โหลดข้อมูลไม่สำเร็จ</div>';});
+</script>
+</body>
+</html>
