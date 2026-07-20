@@ -182,7 +182,7 @@ fetch('data.json?v='+Date.now()).then(r=>r.json()).then(d=>{
   DATA=d;
   document.getElementById('mTitle').textContent=d.meta.title;
   document.getElementById('mTagline').textContent=d.meta.tagline;
-  document.getElementById('mUpdated').textContent='อัปเดต '+d.meta.updated;
+  document.getElementById('mUpdated').textContent='อัปเดต '+d.meta.updated+(d.meta.updated_time?' · '+d.meta.updated_time+' น.':'');
   document.title=d.meta.title+' — ข่าวเชียงใหม่ · ภาคเหนือ';
   buildFilters(); render();
 }).catch(()=>{document.getElementById('feed').innerHTML='<div class="empty">โหลดข้อมูลไม่สำเร็จ</div>';});
