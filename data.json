@@ -25,7 +25,8 @@
           "name": "กรุงเทพธุรกิจ",
           "url": "https://www.bangkokbiznews.com/news/news-update/1243846"
         }
-      ]
+      ],
+      "image": "https://image.bangkokbiznews.com/uploads/images/md/2026/07/6XIOwq6Qd3adwX2zQdwn.webp"
     },
     {
       "urgency": "breaking",
@@ -50,7 +51,8 @@
           "name": "กรมอุตุนิยมวิทยา",
           "url": "https://www.tmd.go.th/weather/region/northern"
         }
-      ]
+      ],
+      "image": "https://media.nationthailand.com/uploads/images/md/2026/07/xKbIv3dauDBqzIA8uxkh.webp"
     },
     {
       "urgency": "normal",
@@ -66,7 +68,8 @@
           "name": "Nation Thailand",
           "url": "https://www.nationthailand.com/news/general/40068064"
         }
-      ]
+      ],
+      "image": "https://media.nationthailand.com/uploads/images/md/2026/06/Ssj64O1gGBO9W8x95bJM.webp"
     },
     {
       "urgency": "normal",
@@ -83,7 +86,8 @@
           "name": "AEC10NEWS",
           "url": "https://aec10news.com/contents/news/national/296689/"
         }
-      ]
+      ],
+      "image": "https://aec10news.com/wp-content/uploads/2026/07/IMG_9771-1.webp"
     },
     {
       "urgency": "normal",
@@ -99,7 +103,8 @@
           "name": "Chiang Mai News",
           "url": "https://www.chiangmainews.co.th/news/3971335/"
         }
-      ]
+      ],
+      "image": "https://cdn.chiangmainews.co.th/wp-content/uploads/2026/07/20150237/1784534556_831400-chiangmainews.jpg"
     },
     {
       "urgency": "event",
@@ -119,7 +124,8 @@
           "name": "At-Chiangmai.com",
           "url": "https://www.at-chiangmai.com/%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-2026-%E0%B8%93-%E0%B8%AA%E0%B8%A7%E0%B8%99-%E0%B8%AD%E0%B8%9A%E0%B8%88-%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88/"
         }
-      ]
+      ],
+      "image": "https://cdn.chiangmainews.co.th/wp-content/uploads/2026/07/10095724/1783652243_543261-chiangmainews.jpg"
     },
     {
       "urgency": "event",
@@ -136,7 +142,8 @@
           "name": "Trip.com",
           "url": "https://th.trip.com/guide/attraction/chiang-mai-walking-street.html"
         }
-      ]
+      ],
+      "image": "https://dimg04.tripcdn.com/images/1n94r224x97wvjmmn2570_Q50.jpg"
     },
     {
       "urgency": "event",
@@ -152,7 +159,8 @@
           "name": "เที่ยวเชียงใหม่ ก.ค. 2569",
           "url": "https://www.cafedethaanaoan.com/th/2026/06/25/tiew-chiang-mai-july-2569/"
         }
-      ]
+      ],
+      "image": "https://www.cafedethaanaoan.com/wp-content/uploads/2026/06/things-todo-in-chiangmai-in-july-th.jpg"
     }
   ]
 }

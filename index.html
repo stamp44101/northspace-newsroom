@@ -32,7 +32,6 @@
   }
   a{color:inherit}
   .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
-  .wrap.narrow{max-width:1160px}
 
   /* header */
   header{
@@ -71,15 +70,27 @@
   #feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;align-items:stretch}
   .card{
     position:relative;background:var(--surface);border:1px solid var(--line);
-    border-radius:14px;padding:15px 17px 13px;margin:0;box-shadow:var(--shadow);
+    border-radius:14px;padding:0;margin:0;box-shadow:var(--shadow);
     transition:transform .16s ease, box-shadow .16s ease;overflow:hidden;
-    display:flex;flex-direction:column;
+    display:flex;flex-direction:column;cursor:pointer;
   }
-  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:.9}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:.9;z-index:2}
   .card.breaking::before{background:var(--breaking)}
   .card.event::before{background:var(--event)}
   .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
 
+  /* thumbnail */
+  .thumb{position:relative;height:150px;background:#eef1f8;overflow:hidden;flex:0 0 auto}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+  .card:hover .thumb img{transform:scale(1.04)}
+  .thumb.ph{display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#dbe3fb,#eef1fe 60%,#e7ecff)}
+  .card.breaking .thumb.ph{background:linear-gradient(135deg,#fbdada,#fdecec 60%,#ffe6e6)}
+  .card.event .thumb.ph{background:linear-gradient(135deg,#d3efe1,#e6f6ef 60%,#dcf3ea)}
+  .thumb.ph::after{content:"✦ NorthSpace";font-family:'Kanit';font-weight:600;font-size:14px;color:rgba(20,26,46,.32);letter-spacing:.02em}
+  .thumb .tstamp{position:absolute;left:10px;bottom:8px;z-index:2;font-family:'Kanit';font-weight:600;font-size:11px;color:#fff;background:rgba(12,16,30,.62);padding:3px 8px;border-radius:7px;backdrop-filter:blur(2px)}
+
+  .body{padding:13px 15px 12px;display:flex;flex-direction:column;flex:1}
   .row1{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
   .badge{font-family:'Kanit';font-weight:600;font-size:11px;letter-spacing:.02em;padding:3px 9px;border-radius:999px}
   .badge.breaking{background:var(--breaking-soft);color:var(--breaking)}
@@ -97,14 +108,38 @@
 
   .foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
   .date{font-size:12px;color:var(--faint);font-family:'Kanit';font-weight:500}
-  .srcs{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-  .src{font-family:'Kanit';font-weight:500;font-size:11.5px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:1px solid var(--accent-soft);background:var(--accent-soft);padding:3px 8px;border-radius:7px;transition:.15s}
-  .src:hover{background:#e2e8ff;border-color:#d3dbff}
-  .src svg{width:12px;height:12px}
+  .more{margin-left:auto;font-family:'Kanit';font-weight:600;font-size:12px;color:var(--accent)}
+  .more::after{content:" →"}
 
   footer.pg{padding:26px 0 48px;text-align:center;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);margin-top:20px}
   footer.pg b{font-family:'Kanit';color:var(--muted)}
   .empty{text-align:center;color:var(--muted);padding:48px 0;font-size:15px}
+
+  /* modal / expand */
+  .modal[hidden]{display:none}
+  .modal{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal-bg{position:absolute;inset:0;background:rgba(15,20,38,.55);backdrop-filter:blur(3px);animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  .modal-card{position:relative;z-index:1;background:var(--surface);border-radius:18px;max-width:640px;width:100%;
+    max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(15,20,38,.4);animation:rise .22s ease}
+  .modal-x{position:absolute;top:12px;right:12px;z-index:3;width:34px;height:34px;border-radius:50%;border:none;
+    background:rgba(15,20,38,.5);color:#fff;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .modal-x:hover{background:rgba(15,20,38,.8)}
+  .modal-thumb{height:270px;background:#eef1f8;flex:0 0 auto;overflow:hidden}
+  .modal-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .modal-thumb.ph{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#dbe3fb,#eef1fe)}
+  .modal-thumb.ph::after{content:"✦ NorthSpace NewsRoom";font-family:'Kanit';font-weight:600;color:rgba(20,26,46,.3)}
+  .modal-scroll{overflow-y:auto;padding:20px 24px 24px}
+  .modal-scroll .row1{margin-bottom:10px}
+  .modal-scroll h2{font-family:'Kanit';font-weight:700;font-size:22px;line-height:1.32;letter-spacing:-.01em;margin:2px 0 12px}
+  .modal-scroll .summary{display:block;-webkit-line-clamp:unset;overflow:visible;font-size:15px;line-height:1.72;color:#2f3750;margin:0 0 16px;white-space:pre-line}
+  .modal-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line)}
+  .srcs{display:flex;gap:8px;flex-wrap:wrap}
+  .src{font-family:'Kanit';font-weight:500;font-size:12px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:1px solid var(--accent-soft);background:var(--accent-soft);padding:4px 10px;border-radius:8px;transition:.15s}
+  .src:hover{background:#e2e8ff;border-color:#d3dbff}
+  .src svg{width:12px;height:12px}
+  @media(max-width:520px){.modal-thumb{height:200px}.modal-scroll h2{font-size:19px}}
 </style>
 </head>
 <body>
@@ -132,39 +167,87 @@
   <b>NorthSpace NewsRoom</b> · ข่าวคัดกรอง+เรียบเรียงโดย AI · อ้างอิงแหล่งข่าวต้นทางเสมอ
 </footer>
 
+<!-- expand modal -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-x" data-close aria-label="ปิด">×</button>
+    <div class="modal-thumb" id="mdThumb"></div>
+    <div class="modal-scroll">
+      <div class="row1" id="mdBadges"></div>
+      <h2 id="mdHead"></h2>
+      <div class="provinces" id="mdProv"></div>
+      <p class="summary" id="mdSum"></p>
+      <div class="modal-foot"><span class="date" id="mdDate"></span><div class="srcs" id="mdSrcs"></div></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const LINK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg>';
-let DATA = null, activeFilter = "ทั้งหมด";
+let DATA = null, activeFilter = "ทั้งหมด", SHOWN = [];
 
 function esc(s){return (s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function badgesHTML(it){
+  const brk = it.urgency==="breaking", ev = it.urgency==="event";
+  return (brk?'<span class="badge breaking">ด่วน</span>':'')
+       + (ev?'<span class="badge event">อีเวนต์</span>':'')
+       + `<span class="badge cat">${esc(it.category)}</span>`;
+}
+function provHTML(pv,limit){
+  pv = pv||[];
+  const show = limit? pv.slice(0,4):pv;
+  return show.map(p=>`<span class="prov">${esc(p)}</span>`).join('')
+       + (limit && pv.length>4?`<span class="prov">+${pv.length-4}</span>`:'');
+}
+function srcsHTML(it){
+  return (it.sources||[]).map(s=>`<a class="src" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)} ${LINK_ICON}</a>`).join('');
+}
+function thumbHTML(it){
+  if(it.image){
+    return `<img src="${esc(it.image)}" alt="" loading="lazy" referrerpolicy="no-referrer"
+      onerror="this.closest('.thumb').classList.add('ph');this.remove();">`
+      + (it.time?`<span class="tstamp">${esc(it.time)} น.</span>`:'');
+  }
+  return (it.time?`<span class="tstamp">${esc(it.time)} น.</span>`:'');
+}
 
 function render(){
   const feed = document.getElementById('feed');
-  const items = DATA.items.filter(it=>{
+  SHOWN = DATA.items.filter(it=>{
     if(activeFilter==="ทั้งหมด") return true;
     if(activeFilter==="🔴 ด่วน") return it.urgency==="breaking";
     return it.category===activeFilter;
   });
-  document.getElementById('empty').style.display = items.length? 'none':'block';
-  feed.innerHTML = items.map(it=>{
-    const brk = it.urgency==="breaking";
-    const ev = it.urgency==="event";
-    const pv = it.provinces||[];
-    const provs = pv.slice(0,4).map(p=>`<span class="prov">${esc(p)}</span>`).join('') + (pv.length>4?`<span class="prov">+${pv.length-4}</span>`:'');
-    const srcs = (it.sources||[]).map(s=>`<a class="src" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)} ${LINK_ICON}</a>`).join('');
-    return `<article class="card ${brk?'breaking':''} ${ev?'event':''}">
-      <div class="row1">
-        ${brk?'<span class="badge breaking">ด่วน</span>':''}
-        ${ev?'<span class="badge event">อีเวนต์</span>':''}
-        <span class="badge cat">${esc(it.category)}</span>
+  document.getElementById('empty').style.display = SHOWN.length? 'none':'block';
+  feed.innerHTML = SHOWN.map((it,i)=>{
+    const brk = it.urgency==="breaking", ev = it.urgency==="event";
+    return `<article class="card ${brk?'breaking':''} ${ev?'event':''}" data-i="${i}" title="แตะเพื่ออ่านต่อ">
+      <div class="thumb ${it.image?'':'ph'}">${thumbHTML(it)}</div>
+      <div class="body">
+        <div class="row1">${badgesHTML(it)}</div>
+        <h2 class="headline">${esc(it.headline)}</h2>
+        <p class="summary">${esc(it.summary)}</p>
+        <div class="provinces">${provHTML(it.provinces,true)}</div>
+        <div class="foot"><span class="date">${esc(it.date)}${it.time?' · '+esc(it.time)+' น.':''}</span><span class="more">อ่านต่อ</span></div>
       </div>
-      <h2 class="headline">${esc(it.headline)}</h2>
-      <p class="summary">${esc(it.summary)}</p>
-      <div class="provinces">${provs}</div>
-      <div class="foot"><span class="date">${esc(it.date)}${it.time?' · '+esc(it.time)+' น.':''}</span><div class="srcs">${srcs}</div></div>
     </article>`;
   }).join('');
 }
+
+function openModal(it){
+  const th=document.getElementById('mdThumb');
+  if(it.image){ th.className='modal-thumb'; th.innerHTML=`<img src="${esc(it.image)}" alt="" referrerpolicy="no-referrer" onerror="this.closest('.modal-thumb').classList.add('ph');this.remove();">`; }
+  else { th.className='modal-thumb ph'; th.innerHTML=''; }
+  document.getElementById('mdBadges').innerHTML=badgesHTML(it);
+  document.getElementById('mdHead').textContent=it.headline;
+  document.getElementById('mdProv').innerHTML=provHTML(it.provinces,false);
+  document.getElementById('mdSum').textContent=it.summary;
+  document.getElementById('mdDate').textContent=it.date+(it.time?' · '+it.time+' น.':'');
+  document.getElementById('mdSrcs').innerHTML=srcsHTML(it);
+  const m=document.getElementById('modal'); m.hidden=false; document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').hidden=true;document.body.style.overflow='';}
 
 function buildFilters(){
   const cats = [...new Set(DATA.items.map(i=>i.category))];
@@ -177,6 +260,15 @@ function buildFilters(){
     render();
   });
 }
+
+// interactions
+document.getElementById('feed').addEventListener('click',e=>{
+  if(e.target.closest('.src')) return;            // let source links work
+  const card=e.target.closest('.card'); if(!card) return;
+  const it=SHOWN[+card.dataset.i]; if(it) openModal(it);
+});
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 
 fetch('data.json?v='+Date.now()).then(r=>r.json()).then(d=>{
   DATA=d;
